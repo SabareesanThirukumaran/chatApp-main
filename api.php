@@ -65,9 +65,15 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup")
     //save information
     include("includes/save_settings.php");
 
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "send_message")
+{
+    //send message information
+    include("includes/send_message.php");
+
 }
 
-function message_left($result)
+
+function message_left($data, $result)
 {
     return 
     "<div id='message_left'>
@@ -75,14 +81,14 @@ function message_left($result)
         <img src='$result->image'>
         <b>$result->username : </b>
         <section style='display: flex; flex-direction: column'>
-            This is a very long message which is going to be very long because it is also a test message for your information yet the message shall be prolonged<br>
+            This is a very long <br>
             <span style='opacity: 0.5; font-size: 11px;'>20 Jan 2022 10:00 am</span>
         </section>
     </div>";
 
 }
 
-function message_right($result)
+function message_right($data, $result)
 {
     return 
     "<div id='message_right'>
@@ -90,7 +96,7 @@ function message_right($result)
         <img src='$result->image'>
         <b> : $result->username</b>
         <section style='display: flex; flex-direction: column'>
-            This is a test message<br>
+            $data->message<br>
             <span style='opacity: 0.5; font-size: 11px;'>20 Jan 2022 10:00 am</span>
         </section>
     </div>";

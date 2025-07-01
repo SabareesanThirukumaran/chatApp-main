@@ -456,6 +456,8 @@
                         get_settings(true);
                         break;
 
+                    
+
                 }
             }
         }
@@ -485,6 +487,25 @@
     function get_settings(e){
         get_data({}, "settings"); 
     }
+
+	function send_message(e)
+	{
+
+		var message_text = _("message_text");
+		if(message_text.value.trim() == ""){
+			
+			alert("please type something to send");
+			return;
+		}
+
+ 		get_data({
+
+			message:message_text.value.trim(),
+			userid :CURRENT_CHAT_USER
+
+		},"send_message");
+
+	}
 
     
 
