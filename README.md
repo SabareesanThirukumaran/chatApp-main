@@ -32,3 +32,9 @@ Had some trouble getting the current user password and setting a new user passwo
 
 ![image](https://github.com/user-attachments/assets/61369747-bbe5-40d5-b700-6e95617b4059)
 
+**Day 7**
+MySQL had crashed, needed to install xampp again and clone this repo and debug the problem. Took some time but got it to run then started the message sending functionality after adding template messages
+
+![image](https://github.com/user-attachments/assets/2efab3e8-c504-414e-bdd9-544360276ce8)
+
+
