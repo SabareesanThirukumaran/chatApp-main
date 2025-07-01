@@ -159,6 +159,134 @@
         color: #e0e0e0;
     }
 
+    #message_left, #message_right {
+        width: fit-content;
+        max-width: 90%;
+        margin: 10px;
+        border: solid thin #aaa;
+        padding: 10px;
+        background-color: #eee;
+        color: #444;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px #ddd;
+        position: relative;
+        clear: both;
+    }
+
+    #message_left {
+        margin-right: auto;
+        background-color: #f1f0f0;
+    }
+
+    #message_right {
+        margin-left: auto;
+        background-color: #d1ffd6; /* light green for sent message */
+        flex-direction: row-reverse;
+    }
+
+    #message_left section,
+    #message_right section {
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+
+
+    #message_left img, #message_right img {
+        width: 45px;
+        height: 45px;
+        margin: 0.5em;
+        border-radius: 50%;
+        border: solid 2px white;
+    }
+
+    #message_left div {
+        width: 20px;
+        height: 20px;
+        background-color: #34474f;
+        border-radius: 50%;
+        position: absolute;
+        left: -10px;
+    }
+
+    #message_right div {
+        width: 20px;
+        height: 20px;
+        background-color: #34474f;
+        border-radius: 50%;
+        position: absolute;
+        right: -10px;
+    }
+
+    #message_left b, #message_right b {
+        margin: 0 10px;
+    }
+
+    #message_left img,
+    #message_right img,
+    #message_left b,
+    #message_right b {
+        flex-shrink: 0;
+        white-space: nowrap;
+    } 
+
+
+    #chat_container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        overflow-y: auto;
+        background-color: #f9f9f9;
+    }
+
+    .textBoxArea {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #ffffff;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .textBoxArea .textArea {
+        width: 75%;
+        margin: 1em;
+        height: 20px;
+        border-radius: 5px;
+        border: none;
+        padding: 7px 10px;
+        background-color:rgb(213, 228, 233);
+        color: #333333; 
+        font-size: 14px;
+        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .textBoxArea .buttonArea {
+        width: 15%;
+        height: 30px;
+        border-radius: 5px;
+        cursor: pointer;
+        border: none;
+        background-color: #4a90e2;
+        color: #ffffff;    
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    #chat_wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 430px;
+    }
+
+    .textBoxArea .buttonArea:hover {
+        background-color: #357abd;
+    }
+
+
 
 
     .loader_on  {
@@ -272,6 +400,9 @@
     function handle_result(result, type){
         if(result.trim() != ""){
 
+            var inner_right_pannel = _("inner_right_pannel");
+            inner_right_pannel.style.overflow = "visible";
+
             var obj = JSON.parse(result);
             if(typeof(obj.logged_in) != "undefined" && !obj.logged_in){
 
@@ -296,7 +427,8 @@
 
                     case "contacts":
                         var inner_left_pannel = _("inner_left_pannel");
-
+    
+                        inner_right_pannel.style.overflow = "hidden";
                         inner_left_pannel.innerHTML = obj.message;
 
                         break;
@@ -304,7 +436,9 @@
                     case "chats":
                         var inner_left_pannel = _("inner_left_pannel");
 
-                        inner_left_pannel.innerHTML = obj.message;
+                        inner_left_pannel.innerHTML = obj.user;
+                        inner_right_pannel.innerHTML = obj.messages;
+
 
                         break;
 
@@ -334,6 +468,12 @@
         }
     }
 
+    get_data({}, "user_info");
+    get_contacts({}, "contacts");
+
+    var radio_contacts = _("radio_contacts");
+    radio_contacts.checked = true;
+
     function get_contacts(e){
         get_data({}, "contacts"); 
     }
@@ -346,7 +486,7 @@
         get_data({}, "settings"); 
     }
 
-    get_data({}, "user_info");
+    
 
 </script>
 

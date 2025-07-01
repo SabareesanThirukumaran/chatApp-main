@@ -66,3 +66,33 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup")
     include("includes/save_settings.php");
 
 }
+
+function message_left($result)
+{
+    return 
+    "<div id='message_left'>
+        <div></div>
+        <img src='$result->image'>
+        <b>$result->username : </b>
+        <section style='display: flex; flex-direction: column'>
+            This is a very long message which is going to be very long because it is also a test message for your information yet the message shall be prolonged<br>
+            <span style='opacity: 0.5; font-size: 11px;'>20 Jan 2022 10:00 am</span>
+        </section>
+    </div>";
+
+}
+
+function message_right($result)
+{
+    return 
+    "<div id='message_right'>
+        <div></div>
+        <img src='$result->image'>
+        <b> : $result->username</b>
+        <section style='display: flex; flex-direction: column'>
+            This is a test message<br>
+            <span style='opacity: 0.5; font-size: 11px;'>20 Jan 2022 10:00 am</span>
+        </section>
+    </div>";
+
+}
