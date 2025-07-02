@@ -187,7 +187,7 @@
         background-color: #d1ffd6; /* light green for sent message */
         flex-direction: row-reverse;
     }
-
+    
     #message_left section,
     #message_right section {
         word-wrap: break-word;
@@ -201,6 +201,16 @@
         margin: 0.5em;
         border-radius: 50%;
         border: solid 2px white;
+    }
+
+    #message_right .tick-box img {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        height: 20px;
+        width: 25px;
+        border: none;
+
     }
 
     #message_left div {
@@ -356,6 +366,7 @@
 <script>
 
     var CURRENT_CHAT_USER = "";
+    var SEEN_STATUS = false;
 
     function _(ele){
         return document.getElementById(ele);
@@ -427,6 +438,7 @@
                         break;
 
                     case "contacts":
+                        
                         var inner_left_pannel = _("inner_left_pannel");
     
                         inner_right_pannel.style.overflow = "hidden";
@@ -435,12 +447,14 @@
                         break;
                     
                     case "chats_refresh":
+                        SEEN_STATUS = false;
                         var chat_container = _("chat_container");
                         chat_container.innerHTML = obj.messages;
 
                         break;
 
                     case "chats":
+                        SEEN_STATUS = false;
                         var inner_left_pannel = _("inner_left_pannel");
 
                         inner_left_pannel.innerHTML = obj.user;
@@ -537,18 +551,25 @@
             send_message(e);
         }
 
+        SEEN_STATUS = true;
     }
 
     setInterval(() => {
         
         if(CURRENT_CHAT_USER != ""){
-
-            get_data({userid:CURRENT_CHAT_USER}, "chats_refresh");
+            get_data({
+                userid:CURRENT_CHAT_USER,
+                seen:SEEN_STATUS
+            }, "chats_refresh");
 
         }
 
 
     }, 3000);
+
+    function set_seen(e){
+        SEEN_STATUS = true;
+    }
 
     
 

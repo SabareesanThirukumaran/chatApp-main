@@ -90,9 +90,19 @@ function message_left($data, $result)
 
 function message_right($data, $result)
 {
-    return 
+    $a =  
     "<div id='message_right'>
-        <div></div>
+        <div class='tick-box'>";
+
+        if($data->seen) {
+            $a .= "<img src='ui/images/tick.png'>";
+        } elseif ($data->received) {
+            $a .= "<img src='ui/images/tick_grey.png'>";
+        }
+
+        
+        $a .= "
+        </div>
         <img src='$result->image'>
         <b> : $result->username</b>
         <section style='display: flex; flex-direction: column'>
@@ -101,6 +111,7 @@ function message_right($data, $result)
         </section>
     </div>";
 
+    return $a;
 }
 
 function message_controls()
@@ -109,7 +120,7 @@ function message_controls()
         "</div>
         <div class='textBoxArea' style='width: 100%'>
             <label for='message_file' style='background-color: #a9a9a9; border-radius: 10px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;'><img src='ui/icons/clip.png' style='opacity:0.5; width:20px; height:20px; cursor:pointer;'></label>
-            <input type='file' name='message_file' style='display:none;' id='file'>
+            <input type='file' name='message_file' style='display:none;' id='message_file'>
             <input id='message_text' onkeyup='enter_pressed(event)' type='text' placeholder='Write your message here...' class='textArea'>
             <input type='button' value='Send' class='buttonArea' onclick='send_message(event)'>
         </div>

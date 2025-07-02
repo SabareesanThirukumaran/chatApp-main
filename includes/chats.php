@@ -7,9 +7,11 @@
     }
 
     $refresh = false;
+    $seen = false;
     if ($DATA_OBJ->data_type == "chats_refresh")
     {
         $refresh = true;
+        $seen = $DATA_OBJ->find->seen;
     }
 
     $sql = "select * from users where userid = :userid limit 1";
@@ -38,7 +40,7 @@
         $messages = "";
         if (!$refresh) {
         $messages = "
-            <div id='chat_wrapper'>
+            <div id='chat_wrapper' onclick='set_seen(event)'>
                 <div id='chat_container'>";
         }
 
@@ -59,6 +61,16 @@
                             if ($myuser->image == null)
                             {
                                 $myuser->image = ($myuser->gender == "Male")? "ui/images/male.jpg" : "ui/images/female.jpg";
+                            }
+
+                            if ($data->receiver == $_SESSION['userid'] && $data->received == 1 && $seen)
+                            {
+                                $DB->write("update messages set seen = 1 where id = $data->id limit 1");
+                            }
+
+                            if ($data->receiver == $_SESSION['userid'])
+                            {
+                                $DB->write("update messages set received = 1 where id = $data->id limit 1");
                             }
 
                             if ($data->sender == $_SESSION['userid'])
