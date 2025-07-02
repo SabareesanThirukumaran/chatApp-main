@@ -38,7 +38,8 @@
     #profile_image {
         border-radius: 50%;
         border: 1px solid white;
-        width: 40%;
+        width: 85px;
+        height: 85px;
         margin: 10px;
         padding: 10px;
     }

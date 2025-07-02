@@ -26,6 +26,7 @@
 
         $result->image = $image;
 
+        $mydata = "";
         if (!$refresh) {
             $mydata = "Now chatting with <br>
                         <div id='active_contact'>
@@ -34,6 +35,7 @@
                         </div>";
         }
 
+        $messages = "";
         if (!$refresh) {
         $messages = "
             <div id='chat_wrapper'>
@@ -108,9 +110,10 @@
                 }
 
                 $mydata .= " 
-                            <div id='active_contact'>
+                            <div id='active_contact' userid='$myuser->userid' onclick='start_chat(event)'>
                                 <img src='$myuser->image'>
-                                <span class='username'>$myuser->username</span>
+                                <span class='username'>$myuser->username</span><br>
+                                <span style='font-size: 12px; opacity: 0.5;'>'$data->message'</span>
                             </div>";    
             }
 
