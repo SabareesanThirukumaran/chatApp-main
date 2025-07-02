@@ -81,8 +81,8 @@ function message_left($data, $result)
         <img src='$result->image'>
         <b>$result->username : </b>
         <section style='display: flex; flex-direction: column'>
-            This is a very long <br>
-            <span style='opacity: 0.5; font-size: 11px;'>20 Jan 2022 10:00 am</span>
+            $data->message<br>
+            <span style='opacity: 0.5; font-size: 11px;'>".date("jS M Y H:i:s", strtotime($data->date))."</span>
         </section>
     </div>";
 
@@ -97,8 +97,22 @@ function message_right($data, $result)
         <b> : $result->username</b>
         <section style='display: flex; flex-direction: column'>
             $data->message<br>
-            <span style='opacity: 0.5; font-size: 11px;'>20 Jan 2022 10:00 am</span>
+            <span style='opacity: 0.5; font-size: 11px;'>".date("jS M Y H:i:s", strtotime($data->date))."</span>
         </section>
+    </div>";
+
+}
+
+function message_controls()
+{
+    return 
+        "</div>
+        <div class='textBoxArea' style='width: 100%'>
+            <label for='message_file' style='background-color: #a9a9a9; border-radius: 10px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;'><img src='ui/icons/clip.png' style='opacity:0.5; width:20px; height:20px; cursor:pointer;'></label>
+            <input type='file' name='message_file' style='display:none;' id='file'>
+            <input id='message_text' onkeyup='enter_pressed(event)' type='text' placeholder='Write your message here...' class='textArea'>
+            <input type='button' value='Send' class='buttonArea' onclick='send_message(event)'>
+        </div>
     </div>";
 
 }

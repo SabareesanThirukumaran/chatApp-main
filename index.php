@@ -439,6 +439,14 @@
                         inner_left_pannel.innerHTML = obj.user;
                         inner_right_pannel.innerHTML = obj.messages;
 
+                        var chat_container = _("chat_container");
+
+                        setTimeout(() => {
+                            chat_container.scrollTo(0,chat_container.scrollHeight);
+                            var message_text = _("message_text");
+                            message_text.focus();
+
+                        }, 0);
 
                         break;
 
@@ -506,6 +514,14 @@
 		},"send_message");
 
 	}
+
+    function enter_pressed(e){
+        
+        if (e.keyCode == 13){
+            send_message(e);
+        }
+
+    }
 
     
 

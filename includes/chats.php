@@ -31,15 +31,7 @@
                 <div id='chat_container'>";
 
 
-        $messages .= "
-                </div>
-                <div class='textBoxArea' style='width: 100%'>
-                    <label for='message_file' style='background-color: #a9a9a9; border-radius: 10px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;'><img src='ui/icons/clip.png' style='opacity:0.5; width:20px; height:20px; cursor:pointer;'></label>
-                    <input type='file' name='message_file' style='display:none;' id='file'>
-                    <input id='message_text' type='text' placeholder='Write your message here...' class='textArea'>
-                    <input type='button' value='Send' class='buttonArea' onclick='send_message(event)'>
-                </div>
-            </div>";
+        $messages .= message_controls();
 
         $info->user = $mydata;
         $info->messages = $messages;
