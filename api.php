@@ -50,7 +50,7 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup")
     //contact information
     include("includes/contacts.php");
 
-} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "chats")
+} else if (isset($DATA_OBJ->data_type) && ($DATA_OBJ->data_type == "chats" || $DATA_OBJ->data_type == "chats_refresh"))
 {
     //chat information
     include("includes/chats.php");

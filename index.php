@@ -432,6 +432,12 @@
                         inner_left_pannel.innerHTML = obj.message;
 
                         break;
+                    
+                    case "chats_refresh":
+                        var chat_container = _("chat_container");
+                        chat_container.innerHTML = obj.messages;
+
+                        break;
 
                     case "chats":
                         var inner_left_pannel = _("inner_left_pannel");
@@ -439,12 +445,21 @@
                         inner_left_pannel.innerHTML = obj.user;
                         inner_right_pannel.innerHTML = obj.messages;
 
-                        var chat_container = _("chat_container");
-
                         setTimeout(() => {
-                            chat_container.scrollTo(0,chat_container.scrollHeight);
+                            var chat_container = _("chat_container");
+                            if (chat_container) {
+                                chat_container.scrollTop = chat_container.scrollHeight;
+                            } else {
+                                console.warn("chat_container not found in DOM");
+                            }
+
                             var message_text = _("message_text");
-                            message_text.focus();
+                            if (message_text) {
+                                message_text.focus();
+                            } else {
+                                console.warn("message_text not found in DOM");
+                            }
+
 
                         }, 0);
 
@@ -522,6 +537,17 @@
         }
 
     }
+
+    setInterval(() => {
+        
+        if(CURRENT_CHAT_USER != ""){
+
+            get_data({userid:CURRENT_CHAT_USER}, "chats_refresh");
+
+        }
+
+
+    }, 3000);
 
     
 

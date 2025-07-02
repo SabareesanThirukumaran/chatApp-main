@@ -51,7 +51,7 @@
                     // read from db
                     $a['msgid'] = $arr['msgid'];
 
-                    $sql = "select * from messages where msgid = :msgid ORDER BY id desc limit 10";
+                    $sql = "select * from messages where msgid = :msgid ORDER BY id desc";
                     $result2 = $DB->read($sql,$a);
 
                     if(is_array($result2)){ 
@@ -60,6 +60,11 @@
                         foreach ($result2 as $data)
                         {
                             $myuser = $DB->get_user($data->sender);
+                            
+                            if ($myuser->image == null)
+                            {
+                                $myuser->image = ($myuser->gender == "Male")? "ui/images/male.jpg" : "ui/images/female.jpg";
+                            }
 
                             if ($data->sender == $_SESSION['userid'])
                             {
