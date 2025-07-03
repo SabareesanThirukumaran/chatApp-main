@@ -38,6 +38,7 @@
         }
 
         $messages = "";
+        $new_message = false;
         if (!$refresh) {
         $messages = "
             <div id='chat_wrapper' onclick='set_seen(event)'>
@@ -61,6 +62,11 @@
                             if ($myuser->image == null)
                             {
                                 $myuser->image = ($myuser->gender == "Male")? "ui/images/male.jpg" : "ui/images/female.jpg";
+                            }
+
+                            if($data->receiver == $_SESSION['userid'] && $data->received == 0)
+                            {
+                                $new_message = true;
                             }
 
                             if ($data->receiver == $_SESSION['userid'] && $data->received == 1 && $seen)
@@ -89,7 +95,8 @@
         
         $info->user = $mydata;
         $info->messages = $messages;
-        
+        $info->new_message = $new_message;
+
         $info->data_type = "chats";
         if ($refresh) {
             $info->data_type = "chats_refresh";

@@ -454,6 +454,12 @@
                         var chat_container = _("chat_container");
                         chat_container.innerHTML = obj.messages;
 
+                        if(typeof obj.new_message != "undefined"){
+                            if (obj.new_message){
+                                received_audio.play();
+                            }
+                        }
+
                         break;
 
                     case "send_message":
@@ -482,6 +488,12 @@
 
 
                         }, 0);
+
+                        if(typeof obj.new_message != "undefined"){
+                            if (obj.new_message){
+                                received_audio.play();
+                            }
+                        }
 
                         break;
 
