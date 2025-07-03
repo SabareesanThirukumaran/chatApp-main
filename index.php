@@ -195,7 +195,7 @@
     }
 
 
-    #message_left img, #message_right img {
+    #message_left #prof_img, #message_right #prof_img {
         width: 45px;
         height: 45px;
         margin: 0.5em;
@@ -241,7 +241,26 @@
     #message_right b {
         flex-shrink: 0;
         white-space: nowrap;
-    } 
+    }
+
+    #message_right #trash {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        bottom: -5px;
+        left: -10px;
+        cursor: pointer;
+    }
+
+    #message_left #trash {
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        bottom: -5px;
+        right: -10px;
+        cursor: pointer;
+    }
+
 
 
     #chat_container {
@@ -457,6 +476,23 @@
                         if(typeof obj.new_message != "undefined"){
                             if (obj.new_message){
                                 received_audio.play();
+                                setTimeout(() => {
+                                    var chat_container = _("chat_container");
+                                    if (chat_container) {
+                                        chat_container.scrollTop = chat_container.scrollHeight;
+                                    } else {
+                                        console.warn("chat_container not found in DOM");
+                                    }
+
+                                    var message_text = _("message_text");
+                                    if (message_text) {
+                                        message_text.focus();
+                                    } else {
+                                        console.warn("message_text not found in DOM");
+                                    }
+
+
+                                }, 0);
                             }
                         }
 
@@ -502,6 +538,9 @@
 
                         inner_left_pannel.innerHTML = obj.message;
 
+                        break;
+
+                    case "send_image":
                         break;
 
                     case "save_settings":
@@ -587,6 +626,40 @@
     function set_seen(e){
         SEEN_STATUS = true;
     }
+
+    function delete_message(e)
+	{
+
+		if(confirm("Are you sure you want to delete this message ?")){
+
+			var msgid = e.target.getAttribute("msgid");
+
+			get_data({
+    				rowid:msgid
+    			},"delete_message");
+
+			get_data({
+    				userid:CURRENT_CHAT_USER,
+    				seen:SEEN_STATUS
+    			},"chats_refresh");
+		}
+	}
+
+    function delete_thread(e)
+	{
+
+		if(confirm("Are you sure you want to delete this whole thread ?")){
+
+			get_data({
+    				userid:CURRENT_CHAT_USER
+    			},"delete_thread");
+
+			get_data({
+    				userid:CURRENT_CHAT_USER,
+    				seen:SEEN_STATUS
+    			},"chats_refresh");
+		}
+	}
 
     
 
@@ -746,6 +819,45 @@
         radio_chat.checked = true;
         get_data({userid:CURRENT_CHAT_USER}, "chats");
     }
+
+    function send_image(files) {
+
+        var file_types = ["jpg", "png"];
+
+        for (var file = 0; file < files.length; file++){
+
+            var file_array = files[file].name.split(".")
+            var file_type_by_user = file_array[file_array.length-1].toLowerCase();
+            if (file_types.includes(file_type_by_user)){
+                var myform = new FormData();
+                var xml = new XMLHttpRequest();
+
+                xml.onload = function(){
+
+                    if(xml.readyState == 4 || xml.status == 200){
+
+                        handle_result(xml.responseText,"send_image");
+                        get_data({
+                            userid:CURRENT_CHAT_USER,
+                            seen:SEEN_STATUS
+                        },"chats_refresh");
+                    }
+                }
+
+                myform.append('file',files[file]);
+                myform.append('data_type',"send_image");
+                myform.append('userid',CURRENT_CHAT_USER);
+        
+                xml.open("POST","uploader.php",true);
+                xml.send(myform);
+            }
+            else{
+                alert("File type not supported");
+                continue;
+            }
+        }
+    }
+
 
 
 </script>

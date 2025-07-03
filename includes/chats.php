@@ -45,49 +45,49 @@
                 <div id='chat_container'>";
         }
 
-                    // read from db
-                    $a['sender'] = $_SESSION['userid'];
-                    $a['receiver'] = $arr['userid'];
+        // read from db
+        $a['sender'] = $_SESSION['userid'];
+        $a['receiver'] = $arr['userid'];
 
-                    $sql = "select * from messages where (sender = :sender && receiver = :receiver) || (receiver = :sender && sender = :receiver) ORDER BY id desc";
-                    $result2 = $DB->read($sql,$a);
+        $sql = "select * from messages where (sender = :sender && receiver = :receiver && deleted_sender = 0) || (receiver = :sender && sender = :receiver && deleted_receiver = 0) ORDER BY id desc";
+        $result2 = $DB->read($sql,$a);
 
-                    if(is_array($result2)){ 
+        if(is_array($result2)){ 
 
-                        $result2 = array_reverse($result2);
-                        foreach ($result2 as $data)
-                        {
-                            $myuser = $DB->get_user($data->sender);
+            $result2 = array_reverse($result2);
+            foreach ($result2 as $data)
+            {
+                $myuser = $DB->get_user($data->sender);
 
-                            if ($myuser->image == null)
-                            {
-                                $myuser->image = ($myuser->gender == "Male")? "ui/images/male.jpg" : "ui/images/female.jpg";
-                            }
+                if ($myuser->image == null)
+                {
+                    $myuser->image = ($myuser->gender == "Male")? "ui/images/male.jpg" : "ui/images/female.jpg";
+                }
 
-                            if($data->receiver == $_SESSION['userid'] && $data->received == 0)
-                            {
-                                $new_message = true;
-                            }
+                if($data->receiver == $_SESSION['userid'] && $data->received == 0)
+                {
+                    $new_message = true;
+                }
 
-                            if ($data->receiver == $_SESSION['userid'] && $data->received == 1 && $seen)
-                            {
-                                $DB->write("update messages set seen = 1 where id = $data->id limit 1");
-                            }
+                if ($data->receiver == $_SESSION['userid'] && $data->received == 1 && $seen)
+                {
+                    $DB->write("update messages set seen = 1 where id = $data->id limit 1");
+                }
 
-                            if ($data->receiver == $_SESSION['userid'])
-                            {
-                                $DB->write("update messages set received = 1 where id = $data->id limit 1");
-                            }
+                if ($data->receiver == $_SESSION['userid'])
+                {
+                    $DB->write("update messages set received = 1 where id = $data->id limit 1");
+                }
 
-                            if ($data->sender == $_SESSION['userid'])
-                            {
-                                $messages .= message_right($data, $myuser);
-                            } else {    
-                                $messages .= message_left($data, $myuser);
-                            }   
-                        }
+                if ($data->sender == $_SESSION['userid'])
+                {
+                    $messages .= message_right($data, $myuser);
+                } else {    
+                    $messages .= message_left($data, $myuser);
+                }   
+            }
 
-                    }
+        }
 
         if (!$refresh) {
             $messages .= message_controls();
@@ -107,14 +107,21 @@
         // read from db
         $a['userid'] = $_SESSION['userid'];
 
-        $sql = "select * from messages where (sender = :userid || receiver = :userid) group by msgid ORDER BY id desc limit 10";
+        $sql = "SELECT m.* FROM messages m
+INNER JOIN (
+    SELECT msgid, MAX(id) as max_id
+    FROM messages
+    WHERE sender = :userid OR receiver = :userid
+    GROUP BY msgid
+) grouped_msg ON m.id = grouped_msg.max_id
+ORDER BY m.id DESC
+LIMIT 10";
         $result2 = $DB->read($sql,$a);
 
         $mydata = "Previous Chats : <br>";
 
         if(is_array($result2)){ 
 
-            $result2 = array_reverse($result2);
             foreach ($result2 as $data)
             {
                 $other_user = $data->sender;

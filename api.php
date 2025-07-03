@@ -70,6 +70,16 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup")
     //send message information
     include("includes/send_message.php");
 
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "delete_message")
+{
+    //send message information
+    include("includes/delete_message.php");
+
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "delete_thread")
+{
+    //send message information
+    include("includes/delete_thread.php");
+
 }
 
 
@@ -78,12 +88,13 @@ function message_left($data, $result)
     return 
     "<div id='message_left'>
         <div></div>
-        <img src='$result->image'>
+        <img id='prof_img' src='$result->image'>
         <b>$result->username : </b>
         <section style='display: flex; flex-direction: column'>
             $data->message<br>
             <span style='opacity: 0.5; font-size: 11px;'>".date("jS M Y H:i:s", strtotime($data->date))."</span>
         </section>
+        <img src='ui/icons/trash.png' id='trash' onclick='delete_message(event)' msgid='$data->id'>
     </div>";
 
 }
@@ -94,33 +105,41 @@ function message_right($data, $result)
     "<div id='message_right'>
         <div class='tick-box'>";
 
-        if($data->seen) {
-            $a .= "<img src='ui/images/tick.png'>";
-        } elseif ($data->received) {
-            $a .= "<img src='ui/images/tick_grey.png'>";
-        }
+    if($data->seen) {
+        $a .= "<img src='ui/images/tick.png'>";
+    } elseif ($data->received) {
+        $a .= "<img src='ui/images/tick_grey.png'>";
+    }
 
-        
-        $a .= "
+    $a .= "
         </div>
-        <img src='$result->image'>
+        <img id='prof_img' src='$result->image'>
         <b> : $result->username</b>
         <section style='display: flex; flex-direction: column'>
-            $data->message<br>
+            $data->message<br>";
+
+    if (!empty($data->files)) {
+        $a .= "<img src='$data->files' style='width: 100px; height: 100px; object-fit: cover;'><br>";
+    }
+
+    $a .= "
             <span style='opacity: 0.5; font-size: 11px;'>".date("jS M Y H:i:s", strtotime($data->date))."</span>
         </section>
+        <img src='ui/icons/trash.png' id='trash' onclick='delete_message(event)' msgid='$data->id'>
     </div>";
 
     return $a;
 }
 
+
 function message_controls()
 {
     return 
         "</div>
+        <span style='display: block; text-align: center; font-size: 14px; color: #555; font-weight: 500; margin: 10px 0; cursor: pointer; transition: color 0.2s ease;' onclick='delete_thread(event)'>Delete this thread</span>
         <div class='textBoxArea' style='width: 100%'>
             <label for='message_file' style='background-color: #a9a9a9; border-radius: 10px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;'><img src='ui/icons/clip.png' style='opacity:0.5; width:20px; height:20px; cursor:pointer;'></label>
-            <input type='file' name='message_file' style='display:none;' id='message_file'>
+            <input type='file' multiple name='message_file' style='display:none;' id='message_file' onchange='send_image(this.files)'>
             <input id='message_text' onkeyup='enter_pressed(event)' type='text' placeholder='Write your message here...' class='textArea'>
             <input type='button' value='Send' class='buttonArea' onclick='send_message(event)'>
         </div>
