@@ -80,6 +80,11 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup")
     //send message information
     include("includes/delete_thread.php");
 
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "addFriends")
+{
+    //send message information
+    include("includes/addFriends.php");
+
 }
 
 
