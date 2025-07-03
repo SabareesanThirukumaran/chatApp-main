@@ -37,4 +37,7 @@ MySQL had crashed, needed to install xampp again and clone this repo and debug t
 
 ![image](https://github.com/user-attachments/assets/2efab3e8-c504-414e-bdd9-544360276ce8)
 
+**Day 8**
+Made alot of progress in the funcitonality of the chat system, fully completed it other than the image sending functionality. Only have minor problems left to finish.
 
+![image](https://github.com/user-attachments/assets/2efab3e8-c504-414e-bdd9-544360276ce8)
