@@ -38,9 +38,31 @@
             transform: scale(1.1);
         }
     </style>
-    <div style="text-align: center; animation: appear 1s ease">';
+    <div style="text-align: center;">';
 
         if(is_array($myusers)){
+
+            // check for new messages;
+            $msgs = array();
+            $me = $_SESSION['userid'];
+            $query = "SELECT * FROM messages WHERE receiver = :me AND received = 0";
+            $mymsgs = $DB->read($query, ['me' => $me]);
+
+            if(is_array($mymsgs))
+            {  
+                foreach ($mymsgs as $row2)
+                {
+                    $sender = $row2->sender;
+
+                    if(isset($msgs[$sender]))
+                    {
+                        $msgs[$sender]++;
+                    } else {
+                        $msgs[$sender] = 1;
+                    }
+                    
+                }
+            }
 
             foreach($myusers as $row)
             {
@@ -56,9 +78,15 @@
                     }
 
                     $mydata .= "
-                    <div id='contact' userid='$row->userid' onclick='start_chat(event)'>
+                    <div id='contact' style='position: relative;' userid='$row->userid' onclick='start_chat(event)'>
                         <img src='$image'>
-                        <br>$row->username
+                        <br>$row->username";
+
+                        if(count($msgs) > 0 && isset($msgs[$row->userid])){
+                            $mydata .= "<div style='width: 20px; height: 20px; border-radius: 50%; background-color: orange; color: white; position: absolute; text-align: center; left: -10px; top: 10px;'>".$msgs[$row->userid]."</div>";
+                        }
+
+                    $mydata .= "
                     </div>";
                 }
             }

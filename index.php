@@ -328,6 +328,26 @@
         display: none;
     }
 
+    .image_on {
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        background-color: #fff;
+        z-index: 5;
+        top: 50px;
+        left: 50px;
+        cursor: pointer;
+        border: 2px solid black;
+    }   
+
+    .image_off {
+        display: none;
+    }
+
+    .invisible {
+        display: none;
+    }
+
 
 </style>
 
@@ -362,6 +382,10 @@
 
             <div id="header">
                 <div class="loader_on" id="loader_holder"><img style="width: 70px" src="ui/icons/giphy.gif"></div>
+                
+                <div id="image_viewer" class='image_off' onclick='close_image(event)'>
+                    <p style='font-size: 12px; text-align:center; color:black; z-index: 7;'>Click anywhere to close the image</p>
+                </div>
                 WeChat
             </div>
 
@@ -612,11 +636,20 @@
 
     setInterval(() => {
         
-        if(CURRENT_CHAT_USER != ""){
+        var radio_chat = _("radio_chat");
+        var radio_contacts = _("radio_contacts");
+
+        if(CURRENT_CHAT_USER != "" && radio_chat.checked){
             get_data({
                 userid:CURRENT_CHAT_USER,
                 seen:SEEN_STATUS
             }, "chats_refresh");
+
+        }
+
+        if(radio_contacts.checked){
+
+            get_data({}, "contacts");
 
         }
 
@@ -856,6 +889,21 @@
                 continue;
             }
         }
+    }
+
+    function close_image(e) {
+        const image_viewer = document.getElementById("image_viewer");
+        image_viewer.className = "image_off";
+        image_viewer.children[0].classList.add("invisible");
+    }
+
+    function image_show(e){
+        var image = e.target.src;
+        var image_viewer = _("image_viewer");
+        image_viewer.style.backgroundImage = "url('" + image + "')";
+        image_viewer.style.backgroundSize = "cover";
+        image_viewer.className = "image_on";
+        image_viewer.children[0].classList.remove("invisible");
     }
 
 

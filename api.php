@@ -85,19 +85,27 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup")
 
 function message_left($data, $result)
 {
-    return 
+    $a =  
     "<div id='message_left'>
         <div></div>
         <img id='prof_img' src='$result->image'>
         <b>$result->username : </b>
         <section style='display: flex; flex-direction: column'>
-            $data->message<br>
+            $data->message<br>";
+
+    if (!empty($data->files)) {
+        $a .= "<img src='$data->files' style='width: 100px; height: 100px; object-fit: cover; cursor: pointer;' onclick='image_show(event)'><br>";
+    }
+
+    $a .= "
             <span style='opacity: 0.5; font-size: 11px;'>".date("jS M Y H:i:s", strtotime($data->date))."</span>
         </section>
         <img src='ui/icons/trash.png' id='trash' onclick='delete_message(event)' msgid='$data->id'>
     </div>";
 
+    return $a;
 }
+
 
 function message_right($data, $result)
 {
@@ -119,7 +127,7 @@ function message_right($data, $result)
             $data->message<br>";
 
     if (!empty($data->files)) {
-        $a .= "<img src='$data->files' style='width: 100px; height: 100px; object-fit: cover;'><br>";
+        $a .= "<img src='$data->files' style='width: 100px; height: 100px; object-fit: cover; cursor: pointer;' onclick='image_show(event)'><br>";
     }
 
     $a .= "
