@@ -89,6 +89,7 @@
         
         $info->user = $mydata;
         $info->messages = $messages;
+        
         $info->data_type = "chats";
         if ($refresh) {
             $info->data_type = "chats_refresh";

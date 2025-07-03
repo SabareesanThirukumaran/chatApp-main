@@ -365,6 +365,9 @@
 </body>
 <script>
 
+    var sent_audio = new Audio("message_sent.mp3");
+    var received_audio = new Audio("message_received.mp3");
+
     var CURRENT_CHAT_USER = "";
     var SEEN_STATUS = false;
 
@@ -453,6 +456,8 @@
 
                         break;
 
+                    case "send_message":
+                        sent_audio.play();
                     case "chats":
                         SEEN_STATUS = false;
                         var inner_left_pannel = _("inner_left_pannel");
