@@ -104,7 +104,11 @@
         transition: all 0.5s;
     }
 
-    #radio_contacts:checked ~ #inner_right_pannel, #radio_settings:checked ~ #inner_right_pannel, #radio_addFriends:checked ~ #inner_right_pannel {
+    #radio_contacts:checked ~ #inner_right_pannel,
+    #radio_settings:checked ~ #inner_right_pannel,
+    #radio_addFriends:checked ~ #inner_right_pannel,
+    #radio_receiveFriends:checked ~ #inner_right_pannel
+    {
         flex: 0;
     }
 
@@ -348,6 +352,44 @@
         display: none;
     }
 
+    #contact_search_box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #2b2b2b73;
+        border-radius: 10px;
+        margin-top: 0.75rem;
+        margin-right: 20px;
+        margin-left: 20px;
+        width: 30%;
+        height: 60%;
+        padding: 25px;
+        cursor: pointer;
+        transition: 0.5s all ease;
+    }
+
+    #contact_search_box img {
+        border: 1px solid white;
+        padding: 5px;
+    }
+
+    #contact_search_box:hover {
+        background-color: #2b2b2b;
+
+    }
+
+    #results {
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+
 
 </style>
 
@@ -372,6 +414,7 @@
                     <label id="label_contacts" for="radio_contacts">Contacts <img src="ui/icons/contacts.png" alt=""></label>
                     <label id="label_settings" for="radio_settings">Settings <img src="ui/icons/settings.png" alt=""></label>
                     <label id="label_addFriends" for="radio_addFriends">Add Friends <img src="ui/icons/add.png" alt="" style="width: 21px; height: 21px;"></label>
+                    <label id="label_receiveFriends" for="radio_receiveFriends">Requests <img src="ui/icons/request.png" alt="" style="width: 21px; height: 21px;"></label>
 
                     <label id="logout" for="radio_logout">Logout <img src="ui/icons/logout.png" alt=""></label>
                 </div>
@@ -399,6 +442,7 @@
                 <input type="radio" id="radio_contacts" name="buts" style="display: none;">
                 <input type="radio" id="radio_settings" name="buts" style="display: none;">
                 <input type="radio" id="radio_addFriends" name="buts" style="display: none;">
+                <input type="radio" id="radio_receiveFriends" name="buts" style="display: none;">
 
                 <div id="inner_right_pannel">
                 </div>
@@ -432,6 +476,9 @@
 
     var label_addFriends = _("label_addFriends");
     label_addFriends.addEventListener("click", get_addFriends);
+
+    var label_receiveFriends = _("label_receiveFriends");
+    label_receiveFriends.addEventListener("click", get_receiveFriends);
 
     var logout = _("logout");
     logout.addEventListener("click", unlog);
@@ -578,6 +625,15 @@
 
                         break;
 
+                    case "friend_request":
+                        var inner_left_pannel = _("inner_left_pannel");
+                        inner_right_pannel.innerHTML = "";
+                        inner_right_pannel.style.overflow = "hidden";
+                        inner_left_pannel.innerHTML = obj.message;
+
+                        break;
+
+
                     case "send_image":
                         break;
 
@@ -610,6 +666,10 @@
 
     function get_contacts(e){
         get_data({}, "contacts"); 
+    }
+
+    function get_receiveFriends(e){
+        get_data({}, "receive_friends"); 
     }
 
     function get_chats(e){
@@ -948,10 +1008,36 @@ function searchUsers() {
     };
 
     ajax.open("POST", "api.php", true);
-    ajax.setRequestHeader("Content-Type", "application/json"); // <-- THIS IS CRUCIAL
+    ajax.setRequestHeader("Content-Type", "application/json");
     ajax.send(JSON.stringify(data));
 }
 
+function send_friend(e) {
+    var friend_to = e.currentTarget.getAttribute("userid");
+
+    let data = {
+        userid: friend_to,
+        data_type: "send_friend"
+    };
+
+    let ajax = new XMLHttpRequest();
+    ajax.onload = function () {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            let obj = JSON.parse(ajax.responseText);
+            if (typeof obj.data_type !== "undefined" && obj.data_type == "send_friend_result") {
+                document.getElementById("results").innerHTML = obj.message;
+            }
+        }
+    };
+
+    ajax.open("POST", "api.php", true);
+    ajax.setRequestHeader("Content-Type", "application/json");
+    ajax.send(JSON.stringify(data));
+}
+
+function accept_request(e){
+    
+}
 
 
 

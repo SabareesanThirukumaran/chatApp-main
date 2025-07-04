@@ -3,13 +3,12 @@ header('Content-Type: application/json');
 
 $info = (object)[];
 
-// Safely get $find as string or empty string if not set
 $find = $DATA_OBJ->find ?? '';
 
 if (is_string($find) && strlen(trim($find)) > 0) {
     $find = trim($find);
 
-    $query = "SELECT userid, username, image FROM users WHERE username LIKE :search LIMIT 10";
+    $query = "SELECT userid, username, image, gender FROM users WHERE username LIKE :search";
     $rows = $DB->read($query, ['search' => "%$find%"]);
 
     $myid = $_SESSION['userid'];
@@ -19,9 +18,14 @@ if (is_string($find) && strlen(trim($find)) > 0) {
         foreach ($rows as $row) {
             if ($row->userid == $myid) continue;
 
-            $image = ($row->image) ? $row->image : 'ui/images/user.jpg';
+            if (isset($row->image)){
+                $image = $row->image;
+            } else {
+                $image = 'ui/images/'. $row->gender . '.jpg';
+            }
+
             $mydata .= "
-                <div id='contact' userid='$row->userid' onclick='start_chat(event)' style='margin-bottom: 10px; cursor: pointer;'>
+                <div id='contact_search_box' userid='$row->userid' onclick='send_friend(event)' style='margin-bottom: 10px; cursor: pointer;'>
                     <img src='$image' style='width: 50px; height: 50px; border-radius: 50%;'>
                     <br>$row->username
                 </div>
