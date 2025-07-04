@@ -55,7 +55,7 @@ chatApp-main/
 
 ## 🚀 Getting Started
 
-### 🔧 Local Setup (via XAMPP or WAMP)
+### 🔧 Local Setup (via XAMPP or WAMP) (Suitable for desktop use only right now, mobile implementation coming soon)
 
 1. **Clone this repo:**
    ```bash
