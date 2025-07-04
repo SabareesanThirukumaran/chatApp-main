@@ -45,4 +45,5 @@ Made alot of progress in the funcitonality of the chat system, fully completed i
 **Day 9**
 Completed the entire website, hosted on wechatogether.wuaze.com. Finished friend requests, accepts and contacts.
 
-![image](https://github.com/user-attachments/assets/02ae3be5-766c-4f7f-a59a-642a8f39191d)
+![image](https://github.com/user-attachments/assets/41c729d4-d57d-42c9-8df6-8e197aff2197)
+
