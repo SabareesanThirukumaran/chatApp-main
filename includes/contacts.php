@@ -1,8 +1,21 @@
 <?php
 
-    sleep(0.5);
-    $sql = "select * from users limit 10";
-    $myusers = $DB->read($sql,[]);
+    $id = $_SESSION['userid'];
+
+    $sql = "
+        SELECT u.*
+        FROM users u
+        WHERE u.userid != :id AND (
+            u.userid IN (
+                SELECT sender_id FROM friends WHERE receiver_id = :id AND status = 'accepted'
+            ) OR
+            u.userid IN (
+                SELECT receiver_id FROM friends WHERE sender_id = :id AND status = 'accepted'
+            )
+        )
+    ";
+
+    $myusers = $DB->read($sql, ['id' => $id]);
 
     // not displaying own contact
     $sql = "select * from users where userid = :userid limit 1";

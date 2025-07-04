@@ -1036,7 +1036,53 @@ function send_friend(e) {
 }
 
 function accept_request(e){
-    
+    var friend_from = e.currentTarget.parentNode.getAttribute("userid");
+    e.currentTarget.parentNode.style.display = "none";
+
+    let data = {
+        senderid: friend_from,
+        do: "accept",
+        data_type: "result_friend"
+    };
+
+    let ajax = new XMLHttpRequest();
+    ajax.onload = function () {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            let obj = JSON.parse(ajax.responseText);
+            if (typeof obj.data_type !== "undefined" && obj.data_type == "friend_request_action") {
+                document.getElementById("request").innerHTML = obj.message;
+            }
+        }
+    };
+
+    ajax.open("POST", "api.php", true);
+    ajax.setRequestHeader("Content-Type", "application/json");
+    ajax.send(JSON.stringify(data));
+}
+
+function decline_request(e){
+    var friend_from = e.currentTarget.parentNode.getAttribute("userid");
+    e.currentTarget.parentNode.style.display = "none";
+
+    let data = {
+        senderid: friend_from,
+        do: "decline",
+        data_type: "result_friend"
+    };
+
+    let ajax = new XMLHttpRequest();
+    ajax.onload = function () {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            let obj = JSON.parse(ajax.responseText);
+            if (typeof obj.data_type !== "undefined" && obj.data_type == "friend_request_action") {
+                document.getElementById("request").innerHTML = obj.message;
+            }
+        }
+    };
+
+    ajax.open("POST", "api.php", true);
+    ajax.setRequestHeader("Content-Type", "application/json");
+    ajax.send(JSON.stringify(data));
 }
 
 

@@ -3,7 +3,7 @@
 $info = (object)[];
 $receiver_id = $_SESSION['userid'];
 
-$sql = "SELECT * FROM friends WHERE receiver_id = :receiver_id";
+$sql = "SELECT * FROM friends WHERE receiver_id = :receiver_id AND status = 'pending'";
 $myfriends = $DB->read($sql, ['receiver_id' => $receiver_id]);
 
 $mydata = '

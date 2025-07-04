@@ -95,6 +95,11 @@ if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "signup")
     //send message information
     include("includes/receive_friends.php");
 
+} else if (isset($DATA_OBJ->data_type) && $DATA_OBJ->data_type == "result_friend")
+{
+    //send message information
+    include("includes/result_friend.php");
+
 }
 
 
