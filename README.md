@@ -41,3 +41,8 @@ MySQL had crashed, needed to install xampp again and clone this repo and debug t
 Made alot of progress in the funcitonality of the chat system, fully completed it other than the image sending functionality. Only have minor problems left to finish.
 
 ![image](https://github.com/user-attachments/assets/02ae3be5-766c-4f7f-a59a-642a8f39191d)
+
+**Day 9**
+Completed the entire website, hosted on wechatogether.wuaze.com. Finished friend requests, accepts and contacts.
+
+![image](https://github.com/user-attachments/assets/02ae3be5-766c-4f7f-a59a-642a8f39191d)
