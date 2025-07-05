@@ -104,11 +104,12 @@ if(is_array($data))
             opacity: 0.5;
             display:inline-block;
         }
+        
 
     </style>
 
     <div id="error">error</div>
-    <div style="display: flex; animation: appear 1s ease">
+    <div style="display: flex; animation: appear 1s ease" id="main_settings">
 
         <div>
             <img ondragover="handle_drag_and_drop(event)" ondragleave="handle_drag_and_drop(event)" ondrop="handle_drag_and_drop(event)" src="'.$image.'" style="width:200px; height:200px; margin: 10px;"/>

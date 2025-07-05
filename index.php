@@ -9,384 +9,474 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
-    body {
-        color: white;
-        font-family: "Nunito", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal
-    }
+body {
+    color: #f5f5f5;
+    background-color: #1f1f2e;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    overflow: hidden;
+}
 
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    display: flex;
+    height: 100vh;
+    flex-direction: row;
+}
+
+@media (max-width: 1050px) {
     #wrapper {
-        max-width: 900px;
-        min-height: 500px;
-        display: flex;
-        margin: auto;
+        flex-direction: column;
     }
 
+    body {
+        overflow-y: scroll;
+    }
+}
+
+#right_pannel {
+    display: flex;
+    flex-direction: column;
+    flex: 4;
+    height: 100%;
+}
+
+#container {
+    flex: 1;
+    display: flex;
+    height: 100%;
+}
+
+@media (max-width: 700px) {
+    #container {
+        flex-direction: column;
+    }
+}
+
+#inner_left_pannel, #inner_right_pannel {
+    height: 100%;
+}
+
+#left_pannel {
+    min-height: 100vh;
+    background-color: #1e2a38;
+    color: #f0f0f0;
+    flex: 1;
+    text-align: center;
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 14px;
+}
+
+@media (max-width: 1050px) {
     #left_pannel {
-        min-height: 500px;
-        background-color: #27344b;
-        color: white;
-        flex: 1;
-        text-align: center;
-        font-family: "Nunito", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal;
-        font-size: 14px;
+        flex-direction: column;
     }
+}
 
-    #profile_image {
-        border-radius: 50%;
-        border: 1px solid white;
-        width: 85px;
-        height: 85px;
-        margin: 10px;
-        padding: 10px;
-    }
-
-    #left_pannel #email {
-        opacity: 0.5;
-        font-size: 12px;
-    }
-
-    #left_pannel label {
-        width: 100%;
-        height: 20px;
-        display: block;
-        font-size: 13px;
-        background-color: #404b56;
-        border-bottom: solid thin #ffffff55;
-        cursor: pointer;
-        padding: 5px;
-        transition: all 0.5s ease;
-    }
-
-    #left_pannel label:hover {
-        background-color:rgb(99, 109, 117);
-    }
-
-    #left_pannel label img {
-        float: right;
-        width: 25px;
-    }
-
-    #right_pannel {
-        min-height: 500px;
-        flex: 4;
-    }
-
-    #header {
-        background-color: #485b6c;
-        color: #fff;
-        height: 70px;
-        font-weight: 700;
-        font-size: 50px;
-        text-align: center;
-        font-family: "Nunito", sans-serif;
-        font-optical-sizing: auto;
-        font-style: normal;
-
-        position: relative;
-    }
-
-    #inner_left_pannel {
-        background-color: #383e48;
-        flex: 1;
-        min-height: 430px;
-        text-align: center;
-        
-    }
-
-    #inner_right_pannel {
-        background-color: #f2f7f8;
-        flex: 2;
-        min-height: 430px;
-        transition: all 0.5s;
-    }
-
-    #radio_contacts:checked ~ #inner_right_pannel,
-    #radio_settings:checked ~ #inner_right_pannel,
-    #radio_addFriends:checked ~ #inner_right_pannel,
-    #radio_receiveFriends:checked ~ #inner_right_pannel
-    {
-        flex: 0;
-    }
-
-    #contact {
-
-        width: 100px;
-        height: 140px;
-        margin:10px;
-        display: inline-block;
-        vertical-align: top;
-    
-    }
-
-    #contact img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-    }
-    
-    #active_contact {
-        width: 100%;
-        max-width: 180px;
-        background-color: #2e3b4e; /* dark background to match your left panel */
-        padding: 12px 10px;
-        margin: 10px auto;
-        border-radius: 8px;
-        text-align: center;
-        color: #fff;
-        font-family: 'Segoe UI', sans-serif;
-        transition: background 0.2s, transform 0.2s;
-        cursor: pointer;
-    }
-
-    #active_contact:hover {
-        background-color: #3b4a61;
-        transform: translateY(-2px);
-    }
-
-    #active_contact img {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #4a90e2;
-        margin-bottom: 8px;
-    }
-
-    #active_contact .username {
-        display: block;
-        font-size: 14px;
-        font-weight: 500;
-        word-break: break-word;
-        color: #e0e0e0;
-    }
-
-    #message_left, #message_right {
-        width: fit-content;
-        max-width: 90%;
-        margin: 10px;
-        border: solid thin #aaa;
-        padding: 10px;
-        background-color: #eee;
-        color: #444;
-        display: flex;
+@media (max-height: 600px) {
+    #left_pannel {
         flex-direction: row;
-        align-items: center;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px #ddd;
-        position: relative;
-        clear: both;
     }
+}
 
-    #message_left {
-        margin-right: auto;
-        background-color: #f1f0f0;
-    }
+#profile_image {
+    border-radius: 50%;
+    border: 1px solid white;
+    width: 85px;
+    height: 85px;
+    margin: 10px;
+    padding: 10px;
+}
 
-    #message_right {
-        margin-left: auto;
-        background-color: #d1ffd6; /* light green for sent message */
-        flex-direction: row-reverse;
-    }
-    
-    #message_left section,
-    #message_right section {
-        word-wrap: break-word;
-        max-width: 100%;
-    }
+#left_pannel #email {
+    opacity: 0.7;
+    font-size: 12px;
+}
 
+#left_pannel label {
+    width: 100%;
+    display: block;
+    font-size: 13px;
+    background-color: #3b4a5a;
+    border-bottom: 1px solid #5a6b7a;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 4px;     
+    color: #d0d8e4;    
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
 
-    #message_left #prof_img, #message_right #prof_img {
-        width: 45px;
-        height: 45px;
-        margin: 0.5em;
-        border-radius: 50%;
-        border: solid 2px white;
-    }
-
-    #message_right .tick-box img {
-        position: absolute;
-        top: 30px;
-        right: 10px;
-        height: 20px;
-        width: 25px;
-        border: none;
-
-    }
-
-    #message_left div {
-        width: 20px;
-        height: 20px;
-        background-color: #34474f;
-        border-radius: 50%;
-        position: absolute;
-        left: -10px;
-    }
-
-    #message_right div {
-        width: 20px;
-        height: 20px;
-        background-color: #34474f;
-        border-radius: 50%;
-        position: absolute;
-        right: -10px;
-    }
-
-    #message_left b, #message_right b {
-        margin: 0 10px;
-    }
-
-    #message_left img,
-    #message_right img,
-    #message_left b,
-    #message_right b {
-        flex-shrink: 0;
-        white-space: nowrap;
-    }
-
-    #message_right #trash {
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        bottom: -5px;
-        left: -10px;
-        cursor: pointer;
-    }
-
-    #message_left #trash {
-        width: 20px;
-        height: 20px;
-        position: absolute;
-        bottom: -5px;
-        right: -10px;
-        cursor: pointer;
-    }
+#left_pannel label:hover {
+    background-color: #50697e;
+    color: #f0f5fa;
+    border-bottom-color: #7a94af;
+    box-shadow: inset 0 1px 4px rgba(255, 255, 255, 0.3);
+}
 
 
+#left_pannel label img {
+    float: right;
+    width: 25px;
+}
 
-    #chat_container {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        padding: 10px;
-        overflow-y: auto;
-        background-color: #f9f9f9;
-    }
+#header {
+    background-color: #2c3e50;
+    color: #ffffff;
+    height: 70px;
+    font-weight: 700;
+    font-size: 50px;
+    text-align: center;
+    position: relative;
+}
 
-    .textBoxArea {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background-color: #ffffff;
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
-    }
+#inner_left_pannel {
+    background-color: #293241;
+    flex: 1;
+    text-align: center;
+}
 
-    .textBoxArea .textArea {
-        width: 75%;
-        margin: 1em;
-        height: 20px;
-        border-radius: 5px;
-        border: none;
-        padding: 7px 10px;
-        background-color:rgb(213, 228, 233);
-        color: #333333; 
-        font-size: 14px;
-        box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
-    }
+#inner_right_pannel {
+    background-color: #ffffff;
+    color: #222;
+    flex: 2;
+    transition: all 0.5s;
+}
 
-    .textBoxArea .buttonArea {
-        width: 15%;
-        height: 30px;
-        border-radius: 5px;
-        cursor: pointer;
-        border: none;
-        background-color: #4a90e2;
-        color: #ffffff;    
-        font-weight: bold;
-        transition: background-color 0.3s;
-    }
+#radio_contacts:checked ~ #inner_right_pannel,
+#radio_settings:checked ~ #inner_right_pannel,
+#radio_addFriends:checked ~ #inner_right_pannel,
+#radio_receiveFriends:checked ~ #inner_right_pannel {
+    flex: 0;
+}
 
-    #chat_wrapper {
-        display: flex;
-        flex-direction: column;
-        height: 430px;
-    }
+#contact {
+    width: 100px;
+    height: 140px;
+    margin: 10px;
+    display: inline-block;
+    vertical-align: top;
+}
 
-    .textBoxArea .buttonArea:hover {
-        background-color: #357abd;
-    }
+#contact img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+#active_contact {
+    width: 100%;
+    max-width: 180px;
+    background-color: #34495e;
+    padding: 12px 10px;
+    margin: 10px auto;
+    border-radius: 8px;
+    text-align: center;
+    color: #f0f0f0;
+    font-family: 'Segoe UI', sans-serif;
+    transition: background 0.2s, transform 0.2s;
+    cursor: pointer;
+}
+
+#active_contact:hover {
+    background-color: #3c5a73;
+    transform: translateY(-2px);
+}
+
+#active_contact img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #4a90e2;
+    margin-bottom: 8px;
+}
+
+#active_contact .username {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    word-break: break-word;
+    color: #e0e0e0;
+}
+
+#message_left, #message_right {
+    width: fit-content;
+    max-width: 90%;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #ddd;
+    position: relative;
+    clear: both;
+}
+
+#message_left {
+    margin-right: auto;
+    background-color: #e1e1e1;
+    color: #111;
+    border: solid thin #aaa;
+}
+
+#message_right {
+    margin-left: auto;
+    background-color: #c0f8c0;
+    color: #111;
+    flex-direction: row-reverse;
+    border: solid thin #aaa;
+}
+
+#message_left section,
+#message_right section {
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+#message_left #prof_img, #message_right #prof_img {
+    width: 45px;
+    height: 45px;
+    margin: 0.5em;
+    border-radius: 50%;
+    border: solid 2px white;
+}
+
+#message_right .tick-box img {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    height: 20px;
+    width: 25px;
+}
+
+#message_left div {
+    width: 20px;
+    height: 20px;
+    background-color: #34474f;
+    border-radius: 50%;
+    position: absolute;
+    left: -10px;
+}
+
+#message_right div {
+    width: 20px;
+    height: 20px;
+    background-color: #34474f;
+    border-radius: 50%;
+    position: absolute;
+    right: -10px;
+}
+
+#message_right #trash,
+#message_left #trash {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    bottom: -5px;
+    cursor: pointer;
+}
+
+#message_right #trash {
+    left: -10px;
+}
+
+#message_left #trash {
+    right: -10px;
+}
+
+#chat_container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    height: 90vh;
+}
+
+.textBoxArea {
+    display: flex;
+    align-items: center;
+    background-color: #fafafa;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.textBoxArea .textArea {
+    width: 75%;
+    margin: 1em;
+    height: 20px;
+    border-radius: 5px;
+    border: none;
+    padding: 7px 10px;
+    background-color: #eaf3f6;
+    color: #111;
+    font-size: 14px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.textBoxArea .buttonArea {
+    width: 15%;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.textBoxArea .buttonArea:hover {
+    background-color: #0056b3;
+}
+
+#chat_wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 92%;
+}
+
+.loader_on {
+    position: absolute;
+    width: 30%;
+}
+
+.loader_off {
+    display: none;
+}
+
+.image_on {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background-color: #fff;
+    z-index: 5;
+    top: 50px;
+    left: 50px;
+    cursor: pointer;
+    border: 2px solid black;
+}
+
+.image_off {
+    display: none;
+}
+
+.invisible {
+    display: none;
+}
+
+#contact_search_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #3a3a4a;
+    border-radius: 10px;
+    margin-top: 0.75rem;
+    margin-right: 20px;
+    margin-left: 20px;
+    width: 30%;
+    height: 60%;
+    padding: 25px;
+    cursor: pointer;
+    transition: 0.5s all ease;
+    color: #fff;
+}
+
+#contact_search_box img {
+    border: 1px solid white;
+    padding: 5px;
+}
+
+#contact_search_box:hover {
+    background-color: #555;
+}
+
+#results {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+  background-color: #1f1f2e;
+  color: #f5f5f5;
+  font-family: "Nunito", sans-serif;
+}
+
+#left_pannel {
+  background-color: #1e2a38;
+  color: #f5f5f5;
+}
+
+#header {
+  background-color: #2c3e50;
+  color: #ffffff;
+}
+
+#inner_left_pannel {
+  background-color: #293241;
+}
+
+#inner_right_pannel {
+  background-color: #ffffff;
+  color: #111;
+}
+
+#active_contact {
+  background-color: #34495e;
+  color: #f5f5f5;
+}
+
+#active_contact:hover {
+  background-color:rgb(42, 65, 83);
+}
+
+#message_left {
+  background-color:rgb(153, 162, 172);
+  color: #f5f5f5;
+  border: 1px solid #555;
+}
+
+#message_right {
+  background-color: #c0f8c0;
+  color: #111;
+  border: 1px solid #aaa;
+}
+
+.textBoxArea {
+  background-color: #fafafa;
+}
+
+.textBoxArea .textArea {
+  background-color: #eaf3f6;
+  color: #111;
+}
+
+.textBoxArea .buttonArea {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+.textBoxArea .buttonArea:hover {
+  background-color: #3a78c2;
+}
 
 
-
-
-    .loader_on  {
-        position: absolute;
-        width: 30%;
-    }
-
-    .loader_off  {  
-        display: none;
-    }
-
-    .image_on {
-        position: absolute;
-        width: 400px;
-        height: 400px;
-        background-color: #fff;
-        z-index: 5;
-        top: 50px;
-        left: 50px;
-        cursor: pointer;
-        border: 2px solid black;
-    }   
-
-    .image_off {
-        display: none;
-    }
-
-    .invisible {
-        display: none;
-    }
-
-    #contact_search_box {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: #2b2b2b73;
-        border-radius: 10px;
-        margin-top: 0.75rem;
-        margin-right: 20px;
-        margin-left: 20px;
-        width: 30%;
-        height: 60%;
-        padding: 25px;
-        cursor: pointer;
-        transition: 0.5s all ease;
-    }
-
-    #contact_search_box img {
-        border: 1px solid white;
-        padding: 5px;
-    }
-
-    #contact_search_box:hover {
-        background-color: #2b2b2b;
-
-    }
-
-    #results {
-        text-align: center;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-    }
 
 
 
